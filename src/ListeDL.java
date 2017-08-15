@@ -11,14 +11,14 @@ public class ListeDL {
 
 	public void remove(ElementDL e) { // Löscht Element
 		if(head == e && head.next != null) {
-			head.next = head;
-			head.prev = null;
-			e.next = null;
-		} else if(tail == e && e != head){
+			head = head.next;
+			head.next.prev = null;
+			
+		} else if(tail == e && head != e){
 			tail = tail.prev;
 			tail.next = null;
 			e.prev = null;
-		} else if(tail == head && e == head) {
+		} else if(tail == head && head == e) {
 			head = null;
 			tail = null;
 		} else {
@@ -30,11 +30,43 @@ public class ListeDL {
 		
 	}
 	
+	public void einfuegen(Object o) {
+		ElementDL e = new ElementDL();
+		e.element = o;
+		
+		if(head == null) {
+			head = e;
+			tail = e;
+		} else {
+			tail.next = e;
+			e.prev = tail;
+			tail = e;
+		}
+	}
+	
+	public void ausgeben() {
+		ElementDL temp = head;
+		while(temp != null) {
+			System.out.println(temp.element.toString());
+			temp = temp.next;
+		}
+	}
 	
 	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-
+		ListeDL liste = new ListeDL();
+		liste.einfuegen("Auto");
+		liste.einfuegen("Mülltonne");
+		liste.einfuegen("Rasenmäher");
+		liste.einfuegen("Traktor");
+		
+		liste.ausgeben();
+		
+		liste.remove(liste.tail);
+		
+		liste.ausgeben();
+		
 	}
 	
 }
